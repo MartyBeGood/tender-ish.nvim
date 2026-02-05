@@ -3,27 +3,30 @@ local M = {}
 M.dark = {
 	-- Color shades are ordered descending by contrast ratio, with the first shade being the most contrasted one and the last one being closest to the background color
 	red = {
-		"#79313c",
-		"#c5152f",
 		"#f43753",
+		"#c5152f",
+		"#79313c",
 	},
 	blue = {
-		"#293b44",
-		"#335261",
-		"#44778d",
-		"#73cef4",
 		"#b3deef",
+		"#73cef4",
+		"#44778d",
+		"#335261",
+		"#293b44",
 	},
 	green = {
-		"#464632",
-		"#6a6b3f",
-		"#9faa00",
 		"#c9d05c",
+		"#9faa00",
+		"#6a6b3f",
+		"#464632",
 	},
 	yellow = {
-		"#d3b987",
 		"#ffc24b",
+		"#e6a23c",
 		"#715b2f",
+	},
+	khaki = {
+		"#d3b987",
 	},
 	-- greyscale order:
 	-- 1 = highlighted text
