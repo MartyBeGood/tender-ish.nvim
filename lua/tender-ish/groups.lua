@@ -1,59 +1,109 @@
-local M = {}
+local M = { link = "Text" }
 
-M.light_mode = function() -- function so that caching doesn't mess things up
-	return vim.o.background == "light"
-end
-
--- palette is the appropriate light or dark palette
-M.semantic_colors = function(palette)
+M.groups = function(colors)
 	return {
-		bg = palette.grey[9],
-		float_bg = palette.grey[10],
-		cursorline_bg = palette.grey[8],
+		-- syntax highlighting
+		Normal = { fg = colors.text.normal, bg = colors.background },
+		Text = { fg = colors.text.normal },
+		Comment = { fg = colors.comment, italic = true },
+		String = { fg = colors.string },
+		Identifier = { link = "Text" },
+		Function = { link = "Text" },
+		Special = { link = "Text" },
+		Statement = { fg = colors.text.muted },
+		Constant = { fg = colors.constant },
+		PreProc = { link = "Text" },
+		Type = { link = "Text" },
+		["@variable"] = { link = "Text" },
+		["@module"] = { link = "Text" },
+		Operator = { link = "Text" },
+		Delimiter = { link = "Text" },
+		Todo = { link = "Text" },
 
-		text = palette.grey[2],
-		highlight = palette.grey[1],
-		muted_text = palette.grey[4],
-		strings = palette.green[1],
-		comments = palette.yellow[1],
-		constants = palette.blue[1],
+		-- diagnostics
+		DiagnosticUnnecessary = { link = "Text" },
+		DiagnosticError = { fg = colors.diagnostic.error },
+		DiagnosticWarn = { fg = colors.diagnostic.warning },
+		DiagnosticInfo = { fg = colors.diagnostic.info },
+		DiagnosticHint = { fg = colors.diagnostic.hint },
+		DiagnosticOk = { fg = colors.diagnostic.hint },
+		DiagnosticUnderlineError = { undercurl = true, sp = colors.diagnostic.error },
+		DiagnosticUnderlineWarn = { undercurl = true, sp = colors.diagnostic.warning },
+		DiagnosticUnderlineInfo = { undercurl = true, sp = colors.diagnostic.info },
+		DiagnosticUnderlineHint = { undercurl = true, sp = colors.diagnostic.hint },
+		DiagnosticUnderlineOk = { undercurl = true, sp = colors.diagnostic.hint },
 
-		removed_bg = palette.red[3],
-		added_bg = palette.green[3],
+		DiagnostidDeprecated = { link = "Text" },
+		Error = { link = "DiagnosticError" },
 
-		float_border = palette.grey[5],
-		statusline_bg = palette.grey[7],
-	}
-end
+		-- diffs
+		Removed = { fg = colors.diff.removed.fg },
+		Added = { fg = colors.diff.added.fg },
+		Changed = { fg = colors.diff.changed.fg },
 
-M.groups = function(semantic_colors)
-	return {
-		Normal = { fg = semantic_colors.text, bg = semantic_colors.bg },
-		Comment = { fg = semantic_colors.comments, italic = true },
-		String = { fg = semantic_colors.strings },
-		Identifier = { link = "Normal" },
-		Function = { link = "Normal" },
-		Special = { link = "Normal" },
-		DiagnosticUnnecessary = { fg = semantic_colors.text, undercurl = true, sp = semantic_colors.strings },
-		Statement = { fg = semantic_colors.muted_text },
+		diffRemoved = { bg = colors.diff.removed.bg },
+		diffAdded = { bg = colors.diff.added.bg },
+		diffChanged = { bg = colors.diff.changed.bg },
 
-		Removed = { fg = semantic_colors.removed_bg },
-		diffRemoved = { bg = semantic_colors.removed_bg },
-		Added = { fg = semantic_colors.added_bg },
-		diffAdded = { bg = semantic_colors.added_bg },
-		Changed = { fg = semantic_colors.changed_bg },
-		diffChanged = { bg = semantic_colors.changed_bg },
+		DiffDelete = { link = "diffRemoved" },
+		DiffAdd = { link = "diffAdded" },
+		DiffChange = { link = "diffChanged" },
+		DiffText = { link = "Text" },
 
 		-- editor ui
-		CursorLine = { bg = semantic_colors.cursorline_bg },
+		NonText = { fg = colors.guide },
+		MatchParen = { link = "Text" },
+		CursorLine = { bg = colors.cursorline_background },
 		CursorColumn = { link = "CursorLine" },
-		NormalFloat = { bg = semantic_colors.float_bg },
-		NormalNC = { fg = semantic_colors.muted_text },
-		Directory = { fg = semantic_colors.text },
+		NormalFloat = { bg = colors.float_background },
+		NormalNC = { fg = colors.text.muted },
+		Directory = { fg = colors.palette.khaki },
 
-		FloatBorder = { fg = semantic_colors.float_border },
-		WinSeparator = { fg = semantic_colors.float_border },
-		StatusLine = { fg = semantic_colors.text, bg = semantic_colors.statusline_bg },
+		FloatBorder = { fg = colors.float_border },
+		FloatShadow = { bg = colors.palette.grey.shadow },
+		WinSeparator = { link = "FloatBorder" },
+		StatusLine = { fg = colors.text.normal, bg = colors.statusline_bg },
+		StatusLineNC = { link = "Text" },
+		Folded = { link = "Text" },
+		ErrorMsg = { link = "Text" },
+		Search = { link = "Text" },
+		CurSearch = { link = "Text" },
+		MoreMsg = { link = "Text" },
+		ModeMsg = { link = "Text" },
+		LineNr = { fg = colors.palette.grey.between_medium },
+		Question = { link = "Text" },
+		CursorLineNr = { fg = colors.comment, bg = colors.cursorline_background },
+		Pmenu = { link = "Text" },
+		PmenuSel = { link = "Text" },
+		PmenuSbar = { link = "Text" },
+		PmenuThumb = { link = "Text" },
+		TabLine = { link = "Text" },
+		TabLineFill = { link = "Text" },
+		TabLineSel = { link = "Text" },
+		Title = { link = "Text" },
+		Visual = { bg = colors.visual_background },
+		VisualNOS = { link = "Text" },
+		WarningMsg = { link = "Text" },
+		SignColumn = { link = "Text" },
+		Conceal = { link = "Text" },
+		SpellBad = { link = "Text" },
+		SpellCap = { link = "Text" },
+		SpellRare = { link = "Text" },
+		SpellLocal = { link = "Text" },
+		ColorColumn = { link = "Text" },
+		QuickFixLine = { link = "Text" },
+		WinBar = { link = "Text" },
+		WinBarNC = { link = "Text" },
+
+		-- plugins
+		GitSignsAdd = { fg = colors.diff.added.fg },
+		GitSignsChange = { fg = colors.diff.changed.fg },
+		GitSignsCurrentLineBlame = { fg = colors.palette.grey.between_medium, italic = true },
+
+		NeoTreeNormal = { fg = colors.text.normal, bg = colors.palette.grey.dark },
+		NeoTreeNormalNC = { fg = colors.text.muted, bg = colors.palette.grey.dark },
+		NeoTreeWinSeparator = { fg = colors.palette.grey.dark, bg = colors.palette.grey.dark },
+		MiniIconsAzure = { fg = colors.palette.blue.medium },
 	}
 end
 
